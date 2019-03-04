@@ -22,6 +22,7 @@ var menuItemsUrl =
   "https://davids-restaurant.herokuapp.com/menu_items.json?category=";
 var menuItemsTitleHtml = "snippets/menu-items-title.html";
 var menuItemHtml = "snippets/menu-item.html";
+var aboutUrl = "snippets/about-snippet.html";
 
 // Convenience function for inserting innerHTML for 'select'
 var insertHtml = function (selector, html) {
@@ -339,6 +340,62 @@ function insertItemPortionName(html,
   return html;
 }
 
+
+// Load the about view
+dc.loadAbout = function () {
+  showLoading("#main-content");
+  $ajaxUtils.sendGetRequest(
+    aboutUrl,
+    buildAndShowAbout,
+    false);
+};
+
+// return a number from 1-5 for a random star rating
+function randomStars(test){
+  // Choose a random number fomr 1 to 5
+  return Math.floor(Math.random() * 5) + 1;
+}
+
+function buildAndShowAbout(aboutHtml){
+	
+	// create a random rating
+	var randomRating = randomStars();
+	
+	var aboutHtmlToInsert = aboutHtml;
+	
+	//at least 1 star so set the first star
+	aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass1", "fa fa-star");
+	
+	// if rating >= 2 fill in the second star
+	if(randomRating >= 2)
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass2", "fa fa-star");
+	else // 2nd star empty
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass2", "fa fa-star-o");
+	
+	// if rating >= 3 fill in the third star
+	if(randomRating >= 3)
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass3", "fa fa-star");
+	else // 3rd star empty
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass3", "fa fa-star-o");
+	
+	// if rating >= 4 fill in the fourth star
+	if(randomRating >= 4)
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass4", "fa fa-star");
+	else // 4th star empty
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass4", "fa fa-star-o");
+	
+	// if rating >= 5 fill in the fifth star
+	if(randomRating >= 5)
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass5", "fa fa-star");
+	else // 2nd star empty
+		aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingClass5", "fa fa-star-o");
+
+	// add rating string 
+	var ratingsString = randomRating + "-star rating";
+	aboutHtmlToInsert = insertProperty(aboutHtmlToInsert, "ratingString", ratingsString);
+	
+    insertHtml("#main-content", aboutHtmlToInsert);
+}
 
 global.$dc = dc;
 
