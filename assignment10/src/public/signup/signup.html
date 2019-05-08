@@ -1,0 +1,20 @@
+<form name="signupForm" novalidate>
+	First Name: <input type="text" name="firstname" ng-model="signupCtrl.firstname" required style="color:black">
+	<span ng-if="signupForm.firstname.$error.required && signupForm.firstname.$touched">First name is required</span><br>
+	
+	Last Name: <input type="text" name="lastname" ng-model="signupCtrl.lastname" required style="color:black">
+	<span ng-if="signupForm.lastname.$error.required && signupForm.lastname.$touched">Last name is required.</span><br>
+	
+	Email Address: <input type="email" name="email" ng-model="signupCtrl.email" required style="color:black">
+	<span ng-if="(signupForm.email.$invalid || signupForm.email.$error.required) && signupForm.email.$touched">Email is not valid.</span><br>
+	
+	Phone Number: <input type="text" name="phone" ng-model="signupCtrl.phone" pattern="(\d{3})-(\d{3})-(\d{4})" style="color:black">
+	<span ng-if="signupForm.phone.$invalid && signupForm.phone.$touched">Phone number must be in the form ###-##-####</span><br>
+	
+	Favorite Dish: <input type="text" name="favoritedish" ng-model="signupCtrl.favoritedish" required min-length="2" menu-item-validation-directive style="color:black">
+	<span ng-if="(signupForm.favoritedish.$error.minlength || signupForm.favoritedish.$error.required || signupForm.favoritedish.$error.favorite) && signupForm.favoritedish.$touched">Favorite dish is invalid.</span><br>
+	
+	<button ng-click="signupCtrl.go()" ng-disabled="signupForm.$invalid" style="color:black">Submit</button>
+</form>
+<p ng-if="signupCtrl.showBadFav">No such menu number exists.</p>
+<p ng-if="signupCtrl.showInfoSaved">You information has been saved.</p>
